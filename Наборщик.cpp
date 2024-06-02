@@ -15,17 +15,17 @@ class Trie
 private:
 	size_t count = 0;
 public:
-	std::set<std::wstring> Res; // полученные слова
-	std::unordered_multimap<std::wstring, std::wstring> dictonary; //словарь
-	std::multimap<size_t, std::wstring> words; // хранение слов опеределенной длины и начинающихся на конкретную букву
-	std::map<std::wstring, int> letters_of_word; // буквы заданного слова, контейнер не содержит повторяющиеся буквы
-	std::vector<wchar_t> word;// для хранения заданного слова
+	std::set<std::wstring> Res; // РїРѕР»СѓС‡РµРЅРЅС‹Рµ СЃР»РѕРІР°
+	std::unordered_multimap<std::wstring, std::wstring> dictonary; //СЃР»РѕРІР°СЂСЊ
+	std::multimap<size_t, std::wstring> words; // С…СЂР°РЅРµРЅРёРµ СЃР»РѕРІ РѕРїРµСЂРµРґРµР»РµРЅРЅРѕР№ РґР»РёРЅС‹ Рё РЅР°С‡РёРЅР°СЋС‰РёС…СЃСЏ РЅР° РєРѕРЅРєСЂРµС‚РЅСѓСЋ Р±СѓРєРІСѓ
+	std::map<std::wstring, int> letters_of_word; // Р±СѓРєРІС‹ Р·Р°РґР°РЅРЅРѕРіРѕ СЃР»РѕРІР°, РєРѕРЅС‚РµР№РЅРµСЂ РЅРµ СЃРѕРґРµСЂР¶РёС‚ РїРѕРІС‚РѕСЂСЏСЋС‰РёРµСЃСЏ Р±СѓРєРІС‹
+	std::vector<wchar_t> word;// РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Р·Р°РґР°РЅРЅРѕРіРѕ СЃР»РѕРІР°
 	bool LoadDictonary(char* Filename);
 	void GuessWord(std::wstring str, size_t length);
 };
 
 
-bool Trie::LoadDictonary(char* Filename) //загрузка словаря
+bool Trie::LoadDictonary(char* Filename) //Р·Р°РіСЂСѓР·РєР° СЃР»РѕРІР°СЂСЏ
 {
 	std::wifstream wif(Filename);
 	std::locale utf8_locale(std::locale(), new std::codecvt_utf8<wchar_t>);
@@ -36,11 +36,11 @@ bool Trie::LoadDictonary(char* Filename) //загрузка словаря
 	while (!wif.eof())
 	{
 		wif >> Buff;
-		if (Buff.find_first_of(L"ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ") != std::wstring::npos) // если есть заглавные буквы
+		if (Buff.find_first_of(L"Р™Р¦РЈРљР•РќР“РЁР©Р—РҐРЄР¤Р«Р’РђРџР РћР›Р”Р–Р­РЇР§РЎРњРРўР¬Р‘Р®") != std::wstring::npos) // РµСЃР»Рё РµСЃС‚СЊ Р·Р°РіР»Р°РІРЅС‹Рµ Р±СѓРєРІС‹
 		{
 			continue;
 		}
-		if (Buff.find_first_of(L"~`!@#$%^&*()_+=-?><.,\\|/;:'""№qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890") != std::wstring::npos)
+		if (Buff.find_first_of(L"~`!@#$%^&*()_+=-?><.,\\|/;:'""в„–qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890") != std::wstring::npos)
 		{
 			continue;
 		}
@@ -51,7 +51,7 @@ bool Trie::LoadDictonary(char* Filename) //загрузка словаря
 	return true;
 }
 
-void Trie::GuessWord(std::wstring str, size_t length) // поиск слов
+void Trie::GuessWord(std::wstring str, size_t length) // РїРѕРёСЃРє СЃР»РѕРІ
 {
 	std::wstring temp = str;
 
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	if (tr.LoadDictonary(argv[1]) == false) // словарь
+	if (tr.LoadDictonary(argv[1]) == false) // СЃР»РѕРІР°СЂСЊ
 	{
 		out << "error" << std::endl;
 		return -1;
@@ -147,12 +147,12 @@ int main(int argc, char *argv[])
 
 	input >> Word;
 	
-	if (Word.find_first_of(L"ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ") != std::wstring::npos) // если есть заглавные буквы
+	if (Word.find_first_of(L"Р™Р¦РЈРљР•РќР“РЁР©Р—РҐРЄР¤Р«Р’РђРџР РћР›Р”Р–Р­РЇР§РЎРњРРўР¬Р‘Р®") != std::wstring::npos) // РµСЃР»Рё РµСЃС‚СЊ Р·Р°РіР»Р°РІРЅС‹Рµ Р±СѓРєРІС‹
 	{
 		out << L"error" << std::endl;
 		return -1;
 	}
-	if (Word.find_first_of(L"~`!@#$%^&*()_+=-?><.,\\|/;:'""№qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890") != std::wstring::npos)
+	if (Word.find_first_of(L"~`!@#$%^&*()_+=-?><.,\\|/;:'""в„–qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890") != std::wstring::npos)
 	{
 		out << L"error" << std::endl;
 		return -1;
